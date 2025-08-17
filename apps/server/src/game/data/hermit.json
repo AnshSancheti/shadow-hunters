@@ -1,0 +1,167 @@
+{
+  "cards": [
+    {
+      "id": "hermit_aid",
+      "name": "Aid",
+      "deck": "HERMIT",
+      "kind": "SINGLE_USE",
+      "text": "If you are a Hunter, heal 1 HP",
+      "effect": {
+        "type": "CONDITIONAL_HEAL",
+        "params": {
+          "condition": "IS_HUNTER",
+          "amount": 1
+        }
+      }
+    },
+    {
+      "id": "hermit_spell",
+      "name": "Spell",
+      "deck": "HERMIT",
+      "kind": "SINGLE_USE",
+      "text": "If you are a Shadow, heal 1 HP",
+      "effect": {
+        "type": "CONDITIONAL_HEAL",
+        "params": {
+          "condition": "IS_SHADOW",
+          "amount": 1
+        }
+      }
+    },
+    {
+      "id": "hermit_nurturance",
+      "name": "Nurturance",
+      "deck": "HERMIT",
+      "kind": "SINGLE_USE",
+      "text": "If you are a Neutral, heal 1 HP",
+      "effect": {
+        "type": "CONDITIONAL_HEAL",
+        "params": {
+          "condition": "IS_NEUTRAL",
+          "amount": 1
+        }
+      }
+    },
+    {
+      "id": "hermit_blessing",
+      "name": "Blessing",
+      "deck": "HERMIT",
+      "kind": "SINGLE_USE",
+      "text": "If you are not a Shadow, heal 1 HP",
+      "effect": {
+        "type": "CONDITIONAL_HEAL",
+        "params": {
+          "condition": "NOT_SHADOW",
+          "amount": 1
+        }
+      }
+    },
+    {
+      "id": "hermit_curse",
+      "name": "Curse",
+      "deck": "HERMIT",
+      "kind": "SINGLE_USE",
+      "text": "If you are not a Hunter, take 1 damage",
+      "effect": {
+        "type": "CONDITIONAL_DAMAGE",
+        "params": {
+          "condition": "NOT_HUNTER",
+          "amount": 1
+        }
+      }
+    },
+    {
+      "id": "hermit_advice",
+      "name": "Advice",
+      "deck": "HERMIT",
+      "kind": "SINGLE_USE",
+      "text": "If you are a Hunter, you may reveal your identity",
+      "effect": {
+        "type": "CONDITIONAL_REVEAL",
+        "params": {
+          "condition": "IS_HUNTER"
+        }
+      }
+    },
+    {
+      "id": "hermit_blackmail",
+      "name": "Blackmail",
+      "deck": "HERMIT",
+      "kind": "SINGLE_USE",
+      "text": "If you are a Shadow, you must reveal your identity",
+      "effect": {
+        "type": "FORCED_REVEAL",
+        "params": {
+          "condition": "IS_SHADOW"
+        }
+      }
+    },
+    {
+      "id": "hermit_anger",
+      "name": "Anger",
+      "deck": "HERMIT",
+      "kind": "SINGLE_USE",
+      "text": "If you have taken 2 or more damage, heal 1 HP",
+      "effect": {
+        "type": "CONDITIONAL_HEAL",
+        "params": {
+          "condition": "DAMAGE_TAKEN",
+          "threshold": 2,
+          "amount": 1
+        }
+      }
+    },
+    {
+      "id": "hermit_greed",
+      "name": "Greed",
+      "deck": "HERMIT",
+      "kind": "SINGLE_USE",
+      "text": "If you are Bob, heal 2 HP",
+      "effect": {
+        "type": "CONDITIONAL_HEAL",
+        "params": {
+          "condition": "IS_CHARACTER",
+          "character": "BOB",
+          "amount": 2
+        }
+      }
+    },
+    {
+      "id": "hermit_slap",
+      "name": "Slap",
+      "deck": "HERMIT",
+      "kind": "SINGLE_USE",
+      "text": "If you are at Weird Woods, take 1 damage",
+      "effect": {
+        "type": "CONDITIONAL_DAMAGE",
+        "params": {
+          "condition": "AT_AREA",
+          "area": "WEIRD_WOODS",
+          "amount": 1
+        }
+      }
+    },
+    {
+      "id": "hermit_prediction",
+      "name": "Prediction",
+      "deck": "HERMIT",
+      "kind": "SINGLE_USE",
+      "text": "You must declare yourself as Hunter, Shadow, or Neutral (you may lie)",
+      "effect": {
+        "type": "DECLARE_FACTION",
+        "params": {}
+      }
+    },
+    {
+      "id": "hermit_talisman",
+      "name": "Talisman",
+      "deck": "HERMIT",
+      "kind": "SINGLE_USE",
+      "text": "Nothing happens",
+      "effect": {
+        "type": "NOTHING",
+        "params": {}
+      }
+    }
+  ]
+}

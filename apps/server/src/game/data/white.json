@@ -1,0 +1,115 @@
+{
+  "cards": [
+    {
+      "id": "white_holy_water",
+      "name": "Holy Water of Healing",
+      "deck": "WHITE",
+      "kind": "SINGLE_USE",
+      "text": "Heal 2 HP",
+      "effect": {
+        "type": "HEAL",
+        "params": {
+          "amount": 2,
+          "target": "SELF"
+        }
+      }
+    },
+    {
+      "id": "white_first_aid",
+      "name": "First Aid",
+      "deck": "WHITE",
+      "kind": "SINGLE_USE",
+      "text": "Set your HP to 7",
+      "effect": {
+        "type": "SET_HP",
+        "params": {
+          "amount": 7,
+          "target": "SELF"
+        }
+      }
+    },
+    {
+      "id": "white_silver_rosary",
+      "name": "Silver Rosary",
+      "deck": "WHITE",
+      "kind": "EQUIPMENT",
+      "text": "If you are a Shadow, take 1 damage when you equip this",
+      "effect": {
+        "type": "CONDITIONAL_DAMAGE",
+        "params": {
+          "condition": "IS_SHADOW",
+          "amount": 1,
+          "timing": "ON_EQUIP"
+        }
+      }
+    },
+    {
+      "id": "white_guardian_angel",
+      "name": "Guardian Angel",
+      "deck": "WHITE",
+      "kind": "SINGLE_USE",
+      "text": "Fully heal any player",
+      "effect": {
+        "type": "FULL_HEAL",
+        "params": {
+          "target": "ANY"
+        }
+      }
+    },
+    {
+      "id": "white_holy_robe",
+      "name": "Holy Robe",
+      "deck": "WHITE",
+      "kind": "EQUIPMENT",
+      "text": "Reduce all damage by 1 (minimum 0)",
+      "effect": {
+        "type": "DAMAGE_REDUCTION",
+        "params": {
+          "amount": 1
+        }
+      }
+    },
+    {
+      "id": "white_mystic_compass",
+      "name": "Mystic Compass",
+      "deck": "WHITE",
+      "kind": "EQUIPMENT",
+      "text": "You may move to any adjacent area",
+      "effect": {
+        "type": "MOVEMENT_BONUS",
+        "params": {
+          "type": "ADJACENT"
+        }
+      }
+    },
+    {
+      "id": "white_chocolate",
+      "name": "Chocolate",
+      "deck": "WHITE",
+      "kind": "SINGLE_USE",
+      "text": "If you are Allie or Unknown, heal 1 HP; otherwise take 2 damage",
+      "effect": {
+        "type": "CONDITIONAL_HEAL_DAMAGE",
+        "params": {
+          "condition": "CHARACTER_CHECK",
+          "characters": ["ALLIE", "UNKNOWN"],
+          "healAmount": 1,
+          "damageAmount": 2
+        }
+      }
+    },
+    {
+      "id": "white_fortune_brooch",
+      "name": "Fortune Brooch",
+      "deck": "WHITE",
+      "kind": "EQUIPMENT",
+      "text": "Your maximum HP is increased by 1",
+      "effect": {
+        "type": "MAX_HP_BONUS",
+        "params": {
+          "amount": 1
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,141 @@
+{
+  "cards": [
+    {
+      "id": "black_handgun",
+      "name": "Handgun",
+      "deck": "BLACK",
+      "kind": "EQUIPMENT",
+      "text": "Your attacks deal +1 damage",
+      "effect": {
+        "type": "DAMAGE_BONUS",
+        "params": {
+          "amount": 1
+        }
+      }
+    },
+    {
+      "id": "black_machine_gun",
+      "name": "Machine Gun",
+      "deck": "BLACK",
+      "kind": "EQUIPMENT",
+      "text": "Your attack range is unlimited",
+      "effect": {
+        "type": "ATTACK_RANGE",
+        "params": {
+          "range": "UNLIMITED"
+        }
+      }
+    },
+    {
+      "id": "black_rusted_sword",
+      "name": "Rusted Broad Axe",
+      "deck": "BLACK",
+      "kind": "EQUIPMENT",
+      "text": "Your attacks deal +2 damage, but you take 1 damage when attacking",
+      "effect": {
+        "type": "DAMAGE_BONUS_WITH_RECOIL",
+        "params": {
+          "bonus": 2,
+          "recoil": 1
+        }
+      }
+    },
+    {
+      "id": "black_dynamite",
+      "name": "Dynamite",
+      "deck": "BLACK",
+      "kind": "SINGLE_USE",
+      "text": "Deal 3 damage to all players in your area",
+      "effect": {
+        "type": "AREA_DAMAGE",
+        "params": {
+          "amount": 3,
+          "includesSelf": true
+        }
+      }
+    },
+    {
+      "id": "black_chainsaw",
+      "name": "Chainsaw",
+      "deck": "BLACK",
+      "kind": "EQUIPMENT",
+      "text": "When you kill a player, deal 2 damage to all players in that area",
+      "effect": {
+        "type": "ON_KILL_AREA_DAMAGE",
+        "params": {
+          "amount": 2
+        }
+      }
+    },
+    {
+      "id": "black_vampire_bat",
+      "name": "Vampire Bat",
+      "deck": "BLACK",
+      "kind": "SINGLE_USE",
+      "text": "If you are a Shadow, heal 1 HP; otherwise take 2 damage",
+      "effect": {
+        "type": "CONDITIONAL_HEAL_DAMAGE",
+        "params": {
+          "condition": "IS_SHADOW",
+          "healAmount": 1,
+          "damageAmount": 2
+        }
+      }
+    },
+    {
+      "id": "black_diabolic_ritual",
+      "name": "Diabolic Ritual",
+      "deck": "BLACK",
+      "kind": "SINGLE_USE",
+      "text": "If you are a Shadow, fully heal; otherwise take 3 damage",
+      "effect": {
+        "type": "CONDITIONAL_HEAL_DAMAGE",
+        "params": {
+          "condition": "IS_SHADOW",
+          "healType": "FULL",
+          "damageAmount": 3
+        }
+      }
+    },
+    {
+      "id": "black_banana_peel",
+      "name": "Banana Peel",
+      "deck": "BLACK",
+      "kind": "SINGLE_USE",
+      "text": "Give all your equipment to any player",
+      "effect": {
+        "type": "GIVE_ALL_EQUIPMENT",
+        "params": {
+          "target": "ANY"
+        }
+      }
+    },
+    {
+      "id": "black_moody_goblin",
+      "name": "Moody Goblin",
+      "deck": "BLACK",
+      "kind": "SINGLE_USE",
+      "text": "Steal an equipment from any player",
+      "effect": {
+        "type": "STEAL_EQUIPMENT",
+        "params": {
+          "target": "ANY",
+          "amount": 1
+        }
+      }
+    },
+    {
+      "id": "black_spiritual_doll",
+      "name": "Spiritual Doll",
+      "deck": "BLACK",
+      "kind": "SINGLE_USE",
+      "text": "Pick a player and roll both dice. That player takes damage equal to the difference",
+      "effect": {
+        "type": "DICE_DAMAGE",
+        "params": {
+          "target": "ANY"
+        }
+      }
+    }
+  ]
+}

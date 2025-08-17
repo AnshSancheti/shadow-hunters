@@ -1,0 +1,64 @@
+{
+  "areas": [
+    {
+      "id": "UNDERWORLD_GATE",
+      "name": "Underworld Gate",
+      "range": [2, 3],
+      "pairedWith": "CHURCH",
+      "action": {
+        "type": "DRAW_BLACK",
+        "description": "Draw a Black card"
+      }
+    },
+    {
+      "id": "CHURCH",
+      "name": "Church",
+      "range": [4, 5],
+      "pairedWith": "UNDERWORLD_GATE",
+      "action": {
+        "type": "DRAW_WHITE",
+        "description": "Draw a White card"
+      }
+    },
+    {
+      "id": "HERMIT_CABIN",
+      "name": "Hermit's Cabin",
+      "range": [6, 6],
+      "pairedWith": "CEMETERY",
+      "action": {
+        "type": "DRAW_HERMIT",
+        "description": "Draw a Hermit card and give it to any player"
+      }
+    },
+    {
+      "id": "CEMETERY",
+      "name": "Cemetery",
+      "range": [8, 8],
+      "pairedWith": "HERMIT_CABIN",
+      "action": {
+        "type": "DRAW_BLACK",
+        "description": "Draw a Black card"
+      }
+    },
+    {
+      "id": "WEIRD_WOODS",
+      "name": "Weird Woods",
+      "range": [9, 10],
+      "pairedWith": "ERSTWHILE_ALTAR",
+      "action": {
+        "type": "HEAL_OR_DAMAGE",
+        "description": "Either heal any player 1 HP or deal 2 damage to any player"
+      }
+    },
+    {
+      "id": "ERSTWHILE_ALTAR",
+      "name": "Erstwhile Altar",
+      "range": [11, 12],
+      "pairedWith": "WEIRD_WOODS",
+      "action": {
+        "type": "STEAL_EQUIPMENT",
+        "description": "Steal an equipment card from a player in your area or paired area"
+      }
+    }
+  ]
+}

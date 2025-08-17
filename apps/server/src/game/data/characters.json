@@ -1,0 +1,126 @@
+{
+  "characters": [
+    {
+      "id": "EMIA",
+      "name": "Emi & Emia",
+      "faction": "HUNTER",
+      "maxHp": 13,
+      "abilities": [
+        {
+          "id": "teleport",
+          "name": "Teleport",
+          "description": "Once per turn, you may move to any area instead of rolling dice",
+          "timing": "onBeforeMove"
+        }
+      ]
+    },
+    {
+      "id": "FRANKLIN",
+      "name": "Franklin",
+      "faction": "HUNTER",
+      "maxHp": 12,
+      "abilities": [
+        {
+          "id": "lightning",
+          "name": "Lightning",
+          "description": "Once per turn, deal 1 damage to all players in your area",
+          "timing": "onAfterMove"
+        }
+      ]
+    },
+    {
+      "id": "GEORGE",
+      "name": "George",
+      "faction": "HUNTER",
+      "maxHp": 14,
+      "abilities": [
+        {
+          "id": "demolish",
+          "name": "Demolish",
+          "description": "Once per turn, deal 1 damage to all Shadows",
+          "timing": "onAfterAttack"
+        }
+      ]
+    },
+    {
+      "id": "VAMPIRE",
+      "name": "Vampire",
+      "faction": "SHADOW",
+      "maxHp": 13,
+      "abilities": [
+        {
+          "id": "bloodsuck",
+          "name": "Bloodsuck",
+          "description": "When you attack and deal damage, heal 2 HP",
+          "timing": "onAfterAttack"
+        }
+      ]
+    },
+    {
+      "id": "WEREWOLF",
+      "name": "Werewolf",
+      "faction": "SHADOW",
+      "maxHp": 14,
+      "abilities": [
+        {
+          "id": "counterattack",
+          "name": "Counter Attack",
+          "description": "After you are attacked, you may immediately counterattack",
+          "timing": "onAfterAttack"
+        }
+      ]
+    },
+    {
+      "id": "VALKYRIE",
+      "name": "Valkyrie",
+      "faction": "SHADOW",
+      "maxHp": 13,
+      "abilities": [
+        {
+          "id": "advent",
+          "name": "Advent",
+          "description": "When your turn starts, if you're at Underworld Gate, all Hunters take 2 damage",
+          "timing": "onBeforeMove"
+        }
+      ]
+    },
+    {
+      "id": "ALLIE",
+      "name": "Allie",
+      "faction": "NEUTRAL",
+      "maxHp": 8,
+      "winCondition": "You win if you're the first to die",
+      "abilities": []
+    },
+    {
+      "id": "BOB",
+      "name": "Bob",
+      "faction": "NEUTRAL",
+      "maxHp": 10,
+      "winCondition": "You win if you have 5 or more equipment cards",
+      "abilities": [
+        {
+          "id": "robbery",
+          "name": "Robbery",
+          "description": "Once per turn, you may steal an equipment card instead of attacking",
+          "timing": "onBeforeAttack"
+        }
+      ]
+    },
+    {
+      "id": "CHARLES",
+      "name": "Charles",
+      "faction": "NEUTRAL",
+      "maxHp": 11,
+      "winCondition": "You win if you're one of the last 2 players alive",
+      "abilities": [
+        {
+          "id": "bloodthirsty",
+          "name": "Bloodthirsty",
+          "description": "When your HP is 6 or less, your attacks deal +2 damage",
+          "timing": "onDamageApply"
+        }
+      ]
+    }
+  ]
+}

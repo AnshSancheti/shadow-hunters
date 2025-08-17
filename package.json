@@ -1,0 +1,27 @@
+{
+  "name": "shadow-hunters-online",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Online multiplayer implementation of Shadow Hunters board game",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "dev:server": "npm run dev -w @shadow-hunters/server",
+    "dev:client": "npm run dev -w @shadow-hunters/client",
+    "build": "npm run build -w @shadow-hunters/shared && npm run build -w @shadow-hunters/server && npm run build -w @shadow-hunters/client",
+    "test": "npm run test --workspaces",
+    "lint": "npm run lint --workspaces",
+    "type-check": "npm run type-check --workspaces"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "concurrently": "^8.2.2",
+    "typescript": "^5.3.3"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
