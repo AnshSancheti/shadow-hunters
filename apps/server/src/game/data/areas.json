@@ -15,10 +15,20 @@
       "name": "Underworld Gate",
       "range": [4, 5],
       "pairedWith": "CHURCH",
-      "action": {
-        "type": "DRAW_BLACK",
-        "description": "Draw a card from the stack of your choice"
-      }
+      "actions": [
+        {
+          "type": "DRAW_BLACK",
+          "description": "Draw a Black card"
+        },
+        {
+          "type": "DRAW_WHITE",
+          "description": "Draw a White card"
+        },
+        {
+          "type": "DRAW_HERMIT",
+          "description": "Draw a Hermit card and give it to any player"
+        }
+      ]
     },
     {
       "id": "CHURCH",

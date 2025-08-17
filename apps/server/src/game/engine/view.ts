@@ -92,87 +92,93 @@ function getLegalActions(state: MatchState, viewerSeat?: Seat): LegalAction[] {
       
     case 'AREA':
       const area = player.position ? state.areas[player.position] : null;
-      if (area && area.action.type !== 'NONE') {
-        // Add specific area actions
-        switch (area.action.type) {
-          case 'DRAW_WHITE':
-          case 'DRAW_BLACK':
-            actions.push({
-              type: 'DO_AREA_ACTION',
-              params: { action: { type: area.action.type } }
-            });
-            break;
+      if (area) {
+        // Handle both single action and multiple actions
+        const availableActions = area.actions || (area.action ? [area.action] : []);
+        
+        for (const actionSpec of availableActions) {
+          if (actionSpec.type === 'NONE') continue;
+          
+          switch (actionSpec.type) {
+            case 'DRAW_WHITE':
+            case 'DRAW_BLACK':
+              actions.push({
+                type: 'DO_AREA_ACTION',
+                params: { action: { type: actionSpec.type } }
+              });
+              break;
             
-          case 'DRAW_HERMIT':
-            // Can give to any living player
-            for (const target of Object.values(state.players)) {
-              if (target.alive) {
-                actions.push({
-                  type: 'DO_AREA_ACTION',
-                  params: { 
-                    action: { 
-                      type: 'DRAW_HERMIT',
-                      targetSeat: target.seat 
-                    }
-                  }
-                });
-              }
-            }
-            break;
-            
-          case 'HEAL_OR_DAMAGE':
-            // Can heal or damage any player
-            for (const target of Object.values(state.players)) {
-              if (target.alive) {
-                actions.push({
-                  type: 'DO_AREA_ACTION',
-                  params: {
-                    action: {
-                      type: 'HEAL',
-                      targetSeat: target.seat,
-                      amount: 1
-                    }
-                  }
-                });
-                actions.push({
-                  type: 'DO_AREA_ACTION',
-                  params: {
-                    action: {
-                      type: 'DAMAGE',
-                      targetSeat: target.seat,
-                      amount: 2
-                    }
-                  }
-                });
-              }
-            }
-            break;
-            
-          case 'STEAL_EQUIPMENT':
-            // Can steal from players in same or paired area
-            const pairedArea = player.position ? getPairedArea(player.position) : null;
-            for (const target of Object.values(state.players)) {
-              if (target.alive && 
-                  target.seat !== player.seat &&
-                  target.equipment.length > 0 &&
-                  player.position &&
-                  (target.position === player.position || 
-                   (pairedArea && target.position === pairedArea))) {
-                for (const equipment of target.equipment) {
+            case 'DRAW_HERMIT':
+              // Can give to any living player
+              for (const target of Object.values(state.players)) {
+                if (target.alive) {
                   actions.push({
                     type: 'DO_AREA_ACTION',
-                    params: {
-                      action: {
-                        type: 'STEAL_EQUIPMENT',
-                        targetSeat: target.seat,
-                        equipmentId: equipment.id
+                    params: { 
+                      action: { 
+                        type: 'DRAW_HERMIT',
+                        targetSeat: target.seat 
                       }
                     }
                   });
                 }
               }
-            }
-            break;
+              break;
+            
+            case 'HEAL_OR_DAMAGE':
+              // Can heal or damage any player
+              for (const target of Object.values(state.players)) {
+                if (target.alive) {
+                  actions.push({
+                    type: 'DO_AREA_ACTION',
+                    params: {
+                      action: {
+                        type: 'HEAL',
+                        targetSeat: target.seat,
+                        amount: 1
+                      }
+                    }
+                  });
+                  actions.push({
+                    type: 'DO_AREA_ACTION',
+                    params: {
+                      action: {
+                        type: 'DAMAGE',
+                        targetSeat: target.seat,
+                        amount: 2
+                      }
+                    }
+                  });
+                }
+              }
+              break;
+            
+            case 'STEAL_EQUIPMENT':
+              // Can steal from players in same or paired area
+              const pairedArea = player.position ? getPairedArea(player.position) : null;
+              for (const target of Object.values(state.players)) {
+                if (target.alive && 
+                    target.seat !== player.seat &&
+                    target.equipment.length > 0 &&
+                    player.position &&
+                    (target.position === player.position || 
+                     (pairedArea && target.position === pairedArea))) {
+                  for (const equipment of target.equipment) {
+                    actions.push({
+                      type: 'DO_AREA_ACTION',
+                      params: {
+                        action: {
+                          type: 'STEAL_EQUIPMENT',
+                          targetSeat: target.seat,
+                          equipmentId: equipment.id
+                        }
+                      }
+                    });
+                  }
+                }
+              }
+              break;
+          }
         }
         
         // Can always skip

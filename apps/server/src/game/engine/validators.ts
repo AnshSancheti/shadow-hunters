@@ -105,11 +105,19 @@ function validateAreaAction(state: MatchState, command: any): ValidationResult {
   const player = state.players[state.activeSeat!];
   const area = state.areas[player.position];
   
-  if (!area || !area.action) {
+  if (!area || (!area.action && !area.actions)) {
     return { valid: false, error: 'No area action available' };
   }
   
   const action = command.action;
+  
+  // Helper function to check if area supports an action type
+  function supportsActionType(actionType: string): boolean {
+    if (area.actions) {
+      return area.actions.some(spec => spec.type === actionType);
+    }
+    return area.action?.type === actionType;
+  }
   
   switch (action.type) {
     case 'SKIP':
@@ -117,13 +125,13 @@ function validateAreaAction(state: MatchState, command: any): ValidationResult {
     
     case 'DRAW_WHITE':
     case 'DRAW_BLACK':
-      if (area.action.type !== action.type) {
+      if (!supportsActionType(action.type)) {
         return { valid: false, error: 'Invalid action for this area' };
       }
       return { valid: true };
     
     case 'DRAW_HERMIT':
-      if (area.action.type !== 'DRAW_HERMIT') {
+      if (!supportsActionType('DRAW_HERMIT')) {
         return { valid: false, error: 'Cannot draw Hermit card here' };
       }
       if (action.targetSeat === undefined) {
@@ -136,7 +144,7 @@ function validateAreaAction(state: MatchState, command: any): ValidationResult {
     
     case 'HEAL':
     case 'DAMAGE':
-      if (area.action.type !== 'HEAL_OR_DAMAGE') {
+      if (!supportsActionType('HEAL_OR_DAMAGE')) {
         return { valid: false, error: 'Cannot heal or damage here' };
       }
       if (action.targetSeat === undefined) {
@@ -148,7 +156,7 @@ function validateAreaAction(state: MatchState, command: any): ValidationResult {
       return { valid: true };
     
     case 'STEAL_EQUIPMENT':
-      if (area.action.type !== 'STEAL_EQUIPMENT') {
+      if (!supportsActionType('STEAL_EQUIPMENT')) {
         return { valid: false, error: 'Cannot steal equipment here' };
       }
       if (action.targetSeat === undefined) {

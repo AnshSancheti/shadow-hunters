@@ -102,11 +102,30 @@ function GameBoard() {
               <p style={{ margin: '5px 0 0 0', opacity: 0.7, fontSize: '12px' }}>
                 Roll {area?.range[0]}-{area?.range[1] === area?.range[0] ? '' : area?.range[1]}
               </p>
-              {area?.action.type !== 'NONE' && (
-                <p style={{ margin: '5px 0 0 0', opacity: 0.7, fontSize: '12px' }}>
-                  {area.action.description}
-                </p>
-              )}
+              {(() => {
+                const availableActions = area?.actions || (area?.action ? [area.action] : []);
+                const validActions = availableActions.filter(action => action.type !== 'NONE');
+                
+                if (validActions.length === 0) return null;
+                
+                if (validActions.length === 1) {
+                  return (
+                    <p style={{ margin: '5px 0 0 0', opacity: 0.7, fontSize: '12px' }}>
+                      {validActions[0].description}
+                    </p>
+                  );
+                }
+                
+                return (
+                  <div style={{ margin: '5px 0 0 0', opacity: 0.7, fontSize: '12px' }}>
+                    {validActions.map((action, i) => (
+                      <p key={i} style={{ margin: '2px 0', fontSize: '11px' }}>
+                        • {action.description}
+                      </p>
+                    ))}
+                  </div>
+                );
+              })()}
             </div>
             
             <div style={{ 

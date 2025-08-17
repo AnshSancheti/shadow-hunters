@@ -58,7 +58,8 @@ export interface AreaDef {
   name: string;
   range: [number, number];
   pairedWith?: AreaId;
-  action: AreaActionSpec;
+  action?: AreaActionSpec;
+  actions?: AreaActionSpec[];
 }
 
 export interface AreaActionSpec {
