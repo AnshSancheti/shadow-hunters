@@ -23,8 +23,25 @@ export class MatchService {
   private matchEvents: Map<string, GameServerEvent[]> = new Map();
   private playerToMatch: Map<string, string> = new Map();
 
+  private generateGameCode(): string {
+    // Generate a 4-character uppercase code (letters only for simplicity)
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    let code = '';
+    
+    // Keep generating until we find an unused code
+    do {
+      code = '';
+      for (let i = 0; i < 4; i++) {
+        code += characters.charAt(Math.floor(Math.random() * characters.length));
+      }
+    } while (this.matches.has(code));
+    
+    return code;
+  }
+
   createMatch(creatorId: string, displayName: string): { matchId: string; match: MatchState } {
-    const matchId = nanoid(8);
+    // Generate a 4-character uppercase code
+    const matchId = this.generateGameCode();
     const match: MatchState = {
       id: matchId,
       status: 'LOBBY',

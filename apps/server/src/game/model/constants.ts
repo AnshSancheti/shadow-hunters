@@ -1,6 +1,6 @@
 import type { AreaId } from '@shadow-hunters/shared';
 
-export const MIN_PLAYERS = 4;
+export const MIN_PLAYERS = 1; // Reduced to 1 for testing
 export const MAX_PLAYERS = 8;
 
 export const AREA_PAIRS: [AreaId, AreaId][] = [
@@ -27,6 +27,9 @@ export const SPECIAL_DICE_SUM = 7;
 export const DISCONNECT_TIMEOUT_MS = 120000;
 
 export const FACTION_DISTRIBUTION = {
+  1: { hunters: 1, shadows: 0, neutrals: 0 }, // Testing with 1 player
+  2: { hunters: 1, shadows: 1, neutrals: 0 }, // Testing with 2 players
+  3: { hunters: 1, shadows: 1, neutrals: 1 }, // Testing with 3 players
   4: { hunters: 2, shadows: 2, neutrals: 0 },
   5: { hunters: 2, shadows: 2, neutrals: 1 },
   6: { hunters: 2, shadows: 2, neutrals: 2 },

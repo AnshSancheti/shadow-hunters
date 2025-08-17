@@ -74,53 +74,80 @@ const start = async () => {
       let currentUserId: string | null = null;
       let currentSeat: number | null = null;
       
-      socket.on('JOIN_MATCH', (data) => {
+      // Store user data on the socket for identification
+      socket.data = socket.data || {};
+      
+      socket.on('JOIN_MATCH', async (data) => {
         try {
           const parsed = CommandSchema.JOIN_MATCH.parse(data);
           currentMatchId = parsed.matchId;
           currentUserId = parsed.userId || `user-${socket.id}`;
           
-          // Join or create player in match
-          const result = matchService.joinMatch(parsed.matchId, currentUserId, parsed.displayName);
+          // Store userId in socket data for later identification
+          socket.data.userId = currentUserId;
+          socket.data.matchId = currentMatchId;
           
-          if (result.success) {
-            currentSeat = result.seat;
-            socket.join(parsed.matchId);
-            
-            // Send state sync to joiner
-            const view = matchService.getClientView(parsed.matchId, result.seat);
-            socket.emit('STATE_SYNC', {
-              id: Date.now().toString(),
-              timestamp: Date.now(),
-              type: 'STATE_SYNC',
-              data: {
-                view,
-                lastEvent: 0
+          // Check if user is already in the match (from HTTP join)
+          const match = matchService.getMatch(parsed.matchId);
+          if (match) {
+            const existingPlayer = Object.values(match.players).find(p => p.userId === currentUserId);
+            if (existingPlayer) {
+              // User already in match, just connect the socket
+              currentSeat = existingPlayer.seat;
+              socket.data.seat = currentSeat;
+              existingPlayer.connected = true;
+              socket.join(parsed.matchId);
+              
+              // Send state sync to reconnecting player
+              const view = matchService.getClientView(parsed.matchId, existingPlayer.seat);
+              socket.emit('STATE_SYNC', {
+                id: Date.now().toString(),
+                timestamp: Date.now(),
+                type: 'STATE_SYNC',
+                data: {
+                  view,
+                  lastEvent: 0
+                }
+              });
+              
+              // Notify others of reconnection and send them their own views
+              const sockets = await io.in(parsed.matchId).fetchSockets();
+              for (const s of sockets) {
+                if (s.id !== socket.id) {
+                  // Send each other player their own view
+                  const otherUserId = s.data?.userId;
+                  if (otherUserId) {
+                    const otherPlayer = Object.values(match.players).find(p => p.userId === otherUserId);
+                    if (otherPlayer) {
+                      const otherView = matchService.getClientView(parsed.matchId, otherPlayer.seat);
+                      s.emit('STATE_SYNC', {
+                        id: Date.now().toString(),
+                        timestamp: Date.now(),
+                        type: 'STATE_SYNC',
+                        data: {
+                          view: otherView,
+                          lastEvent: match.eventsApplied
+                        }
+                      });
+                    }
+                  }
+                }
               }
-            });
-            
-            // Notify others
-            socket.to(parsed.matchId).emit('PLAYER_JOINED', {
-              id: Date.now().toString(),
-              timestamp: Date.now(),
-              type: 'PLAYER_JOINED',
-              data: {
-                seat: result.seat,
-                displayName: parsed.displayName,
-                isYou: false
-              }
-            });
-          } else {
-            socket.emit('ERROR', {
-              id: Date.now().toString(),
-              timestamp: Date.now(),
-              type: 'ERROR',
-              data: {
-                code: 'JOIN_FAILED',
-                message: result.error || 'Failed to join match'
-              }
-            });
+              
+              return;
+            }
           }
+          
+          // New player joining - this shouldn't happen if they used HTTP endpoint first
+          socket.emit('ERROR', {
+            id: Date.now().toString(),
+            timestamp: Date.now(),
+            type: 'ERROR',
+            data: {
+              code: 'JOIN_FAILED',
+              message: 'Please use the join/create game flow'
+            }
+          });
         } catch (error) {
           console.error('JOIN_MATCH error:', error);
           socket.emit('ERROR', {
@@ -135,7 +162,7 @@ const start = async () => {
         }
       });
       
-      socket.on('START_GAME', (data) => {
+      socket.on('START_GAME', async (data) => {
         try {
           if (!currentMatchId) return;
           
@@ -155,20 +182,24 @@ const start = async () => {
                 }
               });
               
-              // Send state sync to all
-              for (const seat of match.seats) {
-                const playerSocket = io.sockets.sockets.get(socket.id);
-                if (playerSocket) {
-                  const view = matchService.getClientView(currentMatchId, seat);
-                  playerSocket.emit('STATE_SYNC', {
-                    id: Date.now().toString(),
-                    timestamp: Date.now(),
-                    type: 'STATE_SYNC',
-                    data: {
-                      view,
-                      lastEvent: 0
-                    }
-                  });
+              // Send state sync to all players with their own views
+              const sockets = await io.in(currentMatchId).fetchSockets();
+              for (const s of sockets) {
+                const socketUserId = s.data?.userId;
+                if (socketUserId) {
+                  const player = Object.values(match.players).find(p => p.userId === socketUserId);
+                  if (player) {
+                    const view = matchService.getClientView(currentMatchId, player.seat);
+                    s.emit('STATE_SYNC', {
+                      id: Date.now().toString(),
+                      timestamp: Date.now(),
+                      type: 'STATE_SYNC',
+                      data: {
+                        view,
+                        lastEvent: 0
+                      }
+                    });
+                  }
                 }
               }
               

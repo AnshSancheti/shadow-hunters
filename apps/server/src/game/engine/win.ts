@@ -17,7 +17,7 @@ export function evaluateWin(state: MatchState): WinResult | null {
   const factionCounts = countFactions(state);
   
   // Hunters win if all Shadows are dead
-  if (factionCounts.shadows === 0 && factionCounts.hunters > 0) {
+  if (factionCounts.shadows === 0) {
     const hunterSeats = getSeatsOfFaction(state, 'HUNTER');
     return {
       winners: hunterSeats,
@@ -27,21 +27,12 @@ export function evaluateWin(state: MatchState): WinResult | null {
   }
   
   // Shadows win if all Hunters are dead OR if they equal/outnumber Hunters
-  if (factionCounts.hunters === 0 && factionCounts.shadows > 0) {
+  if (factionCounts.hunters === 0) {
     const shadowSeats = getSeatsOfFaction(state, 'SHADOW');
     return {
       winners: shadowSeats,
       faction: 'SHADOW',
       reason: 'All Hunters have been eliminated'
-    };
-  }
-  
-  if (factionCounts.shadows >= factionCounts.hunters && factionCounts.hunters > 0) {
-    const shadowSeats = getSeatsOfFaction(state, 'SHADOW');
-    return {
-      winners: shadowSeats,
-      faction: 'SHADOW',
-      reason: 'Shadows equal or outnumber Hunters'
     };
   }
   
