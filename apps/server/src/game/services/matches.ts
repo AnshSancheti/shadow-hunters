@@ -185,7 +185,8 @@ export class MatchService {
     }
 
     // Process command through reducer
-    const rng = new RNG(match.rngSeed + match.eventsApplied);
+    // Use proper seed mixing to avoid correlation
+    const rng = new RNG(`${match.rngSeed}:${match.eventsApplied}`);
     const context: ReducerContext = {
       state: match,
       rng,

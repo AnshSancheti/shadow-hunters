@@ -1,45 +1,25 @@
+import { createHash } from 'crypto';
+
 export class RNG {
-  private s0: number;
-  private s1: number;
+  private counter: number = 0;
+  private seed: string;
 
   constructor(seed: string) {
-    const hash = this.hashString(seed);
-    this.s0 = hash & 0xffffffff;
-    this.s1 = (hash / 0x100000000) & 0xffffffff;
-    
-    if (this.s0 === 0 && this.s1 === 0) {
-      this.s0 = 0xdeadbeef;
-      this.s1 = 0xcafebabe;
-    }
-  }
-
-  private hashString(str: string): number {
-    let hash = 0;
-    for (let i = 0; i < str.length; i++) {
-      const char = str.charCodeAt(i);
-      hash = ((hash << 5) - hash) + char;
-      hash = hash & hash;
-    }
-    return Math.abs(hash);
-  }
-
-  private rotl(x: number, k: number): number {
-    return (x << k) | (x >>> (32 - k));
+    this.seed = seed;
   }
 
   private next(): number {
-    const s0 = this.s0;
-    let s1 = this.s1;
-    const result = (s0 + s1) >>> 0;
-
-    s1 ^= s0;
-    this.s0 = this.rotl(s0, 24) ^ s1 ^ ((s1 << 16) & 0xffffffff);
-    this.s1 = this.rotl(s1, 37);
-
-    return result;
+    // Create a deterministic hash from seed and counter
+    const hash = createHash('sha256')
+      .update(`${this.seed}-${this.counter++}`)
+      .digest();
+    
+    // Use first 4 bytes as a 32-bit unsigned integer
+    return hash.readUInt32BE(0);
   }
 
   random(): number {
+    // Return a number between 0 and 1
     return this.next() / 0x100000000;
   }
 
