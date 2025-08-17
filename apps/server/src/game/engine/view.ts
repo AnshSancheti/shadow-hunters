@@ -90,7 +90,7 @@ function getLegalActions(state: MatchState, viewerSeat?: Seat): LegalAction[] {
       break;
       
     case 'AREA':
-      const area = state.areas[player.position];
+      const area = player.position ? state.areas[player.position] : null;
       if (area && area.action.type !== 'NONE') {
         // Add specific area actions
         switch (area.action.type) {
@@ -149,11 +149,12 @@ function getLegalActions(state: MatchState, viewerSeat?: Seat): LegalAction[] {
             
           case 'STEAL_EQUIPMENT':
             // Can steal from players in same or paired area
-            const pairedArea = getPairedArea(player.position);
+            const pairedArea = player.position ? getPairedArea(player.position) : null;
             for (const target of Object.values(state.players)) {
               if (target.alive && 
                   target.seat !== player.seat &&
                   target.equipment.length > 0 &&
+                  player.position &&
                   (target.position === player.position || 
                    (pairedArea && target.position === pairedArea))) {
                 for (const equipment of target.equipment) {
@@ -189,10 +190,11 @@ function getLegalActions(state: MatchState, viewerSeat?: Seat): LegalAction[] {
       
     case 'ATTACK':
       // Can attack players in same or paired area
-      const attackerPairedArea = getPairedArea(player.position);
+      const attackerPairedArea = player.position ? getPairedArea(player.position) : null;
       for (const target of Object.values(state.players)) {
         if (target.alive && 
             target.seat !== player.seat &&
+            player.position &&
             (target.position === player.position || 
              (attackerPairedArea && target.position === attackerPairedArea))) {
           actions.push({

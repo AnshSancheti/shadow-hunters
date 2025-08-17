@@ -61,7 +61,7 @@ export class MatchService {
           revealed: false,
           characterId: '',
           equipment: [],
-          position: 'UNDERWORLD_GATE' as AreaId,
+          position: null,
           connected: true
         }
       },
@@ -117,7 +117,7 @@ export class MatchService {
       revealed: false,
       characterId: '',
       equipment: [],
-      position: 'UNDERWORLD_GATE' as AreaId,
+      position: null,
       connected: true
     };
 
@@ -152,11 +152,7 @@ export class MatchService {
     match.turnOrder = rng.shuffle([...match.seats]);
     match.activeSeat = match.turnOrder[0];
     
-    // Set initial positions
-    const startingAreas = ['UNDERWORLD_GATE', 'CHURCH', 'HERMIT_CABIN'] as AreaId[];
-    for (const player of Object.values(match.players)) {
-      player.position = rng.choice(startingAreas) || 'UNDERWORLD_GATE' as AreaId;
-    }
+    // Players start outside any location (null position)
     
     match.status = 'ACTIVE';
     match.startedAt = Date.now();
@@ -245,6 +241,11 @@ export class MatchService {
   private assignCharacters(match: MatchState, rng: RNG) {
     const playerCount = match.seats.length;
     const distribution = FACTION_DISTRIBUTION[playerCount as keyof typeof FACTION_DISTRIBUTION];
+    
+    if (!distribution) {
+      console.error(`No faction distribution defined for ${playerCount} players`);
+      return;
+    }
     
     const hunters = charactersData.characters.filter(c => c.faction === 'HUNTER');
     const shadows = charactersData.characters.filter(c => c.faction === 'SHADOW');

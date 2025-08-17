@@ -43,7 +43,7 @@ export interface PlayerState {
   revealed: boolean;
   characterId: string;
   equipment: CardInstance[];
-  position: AreaId;
+  position: AreaId | null;
   connected: boolean;
 }
 
@@ -138,7 +138,7 @@ export interface PublicPlayerView {
   characterName?: string;
   faction?: Faction;
   equipment: string[];
-  position: AreaId;
+  position: AreaId | null;
   connected: boolean;
 }
 

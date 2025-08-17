@@ -257,21 +257,29 @@ const start = async () => {
               io.to(currentMatchId).emit(event.type, event);
             }
             
-            // Send updated state to all players
+            // Send updated state to all players with their personalized views
             const match = matchService.getMatch(currentMatchId);
             if (match) {
-              for (const seat of match.seats) {
-                const view = matchService.getClientView(currentMatchId, seat);
-                io.to(currentMatchId).emit('STATE_SYNC', {
-                  id: Date.now().toString(),
-                  timestamp: Date.now(),
-                  type: 'STATE_SYNC',
-                  data: {
-                    view,
-                    lastEvent: match.eventsApplied
+              io.in(currentMatchId).fetchSockets().then(sockets => {
+                for (const s of sockets) {
+                  const socketUserId = s.data?.userId;
+                  if (socketUserId) {
+                    const player = Object.values(match.players).find(p => p.userId === socketUserId);
+                    if (player) {
+                      const view = matchService.getClientView(currentMatchId, player.seat);
+                      s.emit('STATE_SYNC', {
+                        id: Date.now().toString(),
+                        timestamp: Date.now(),
+                        type: 'STATE_SYNC',
+                        data: {
+                          view,
+                          lastEvent: match.eventsApplied
+                        }
+                      });
+                    }
                   }
-                });
-              }
+                }
+              });
             }
           } catch (error) {
             console.error(`${commandType} error:`, error);

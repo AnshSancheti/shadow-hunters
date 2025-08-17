@@ -307,16 +307,7 @@ export function gameReducer(
         });
       }
 
-      events.push({
-        id: nanoid(),
-        timestamp,
-        type: 'PHASE_CHANGED',
-        data: {
-          from: 'ATTACK',
-          to: 'END',
-          seat: state.activeSeat!
-        }
-      });
+      // Stay in ATTACK phase to allow multiple attacks
       break;
     }
 

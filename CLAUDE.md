@@ -69,6 +69,13 @@ npm run test
 - `POST /match/:id/join` - Join existing match
 - WebSocket events for real-time gameplay
 
+## Recent Updates & Fixes
+- **Players Start Outside Board**: All players begin with `position: null` and must roll dice to enter
+- **Attack Phase Flexibility**: Players can attack multiple times or end turn after any attack  
+- **Personalized Views**: Each player sees their own "You" label correctly via personalized Socket.IO messages
+- **4-Character Game Codes**: Simplified from 8-character nanoid to 4-letter codes
+- **Testing Mode**: MIN_PLAYERS set to 1 for easier development testing
+
 ## Known Considerations
 - Currently uses in-memory storage (no persistence)
 - Character abilities are scaffolded but not fully implemented
