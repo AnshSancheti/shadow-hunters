@@ -1,15 +1,74 @@
 {
   "characters": [
     {
-      "id": "EMIA",
-      "name": "Emi & Emia",
+      "id": "ALLIE",
+      "name": "Allie",
+      "faction": "NEUTRAL",
+      "maxHp": 8,
+      "winCondition": "You're not dead when the game is over",
+      "abilities": [
+        {
+          "id": "mothers_love",
+          "name": "Mother's Love",
+          "description": "Fully heal your damage once during the game.",
+          "timing": "onBeforeMove"
+        }
+      ]
+    },
+    {
+      "id": "BOB",
+      "name": "Bob",
+      "faction": "NEUTRAL",
+      "maxHp": 10,
+      "winCondition": "You have 5 or more equipment cards",
+      "abilities": [
+        {
+          "id": "robbery",
+          "name": "Robbery",
+          "description": "Take equipment instead of damage (rules vary by player count).",
+          "timing": "onDamageApply"
+        }
+      ]
+    },
+    {
+      "id": "CHARLES",
+      "name": "Charles",
+      "faction": "NEUTRAL",
+      "maxHp": 11,
+      "winCondition": "At the time you kill another character, the total number of dead characters is 3 or more",
+      "abilities": [
+        {
+          "id": "bloody_feast",
+          "name": "Bloody Feast",
+          "description": "Attack the same character again by giving yourself 2 damage.",
+          "timing": "onAfterAttack"
+        }
+      ]
+    },
+    {
+      "id": "DANIEL",
+      "name": "Daniel",
       "faction": "HUNTER",
       "maxHp": 13,
       "abilities": [
         {
+          "id": "scream",
+          "name": "Scream",
+          "description": "Must reveal identity when another character dies.",
+          "timing": "onDeath"
+        }
+      ]
+    },
+    {
+      "id": "EMI",
+      "name": "Emi",
+      "faction": "HUNTER",
+      "maxHp": 10,
+      "abilities": [
+        {
           "id": "teleport",
           "name": "Teleport",
-          "description": "Once per turn, you may move to any area instead of rolling dice",
+          "description": "Can choose to roll dice or move to paired/adjacent area.",
           "timing": "onBeforeMove"
         }
       ]
@@ -23,8 +82,8 @@
         {
           "id": "lightning",
           "name": "Lightning",
-          "description": "Once per turn, deal 1 damage to all players in your area",
-          "timing": "onAfterMove"
+          "description": "Once per game, roll a 6-sided die to give that much damage.",
+          "timing": "onBeforeAttack"
         }
       ]
     },
@@ -37,8 +96,22 @@
         {
           "id": "demolish",
           "name": "Demolish",
-          "description": "Once per turn, deal 1 damage to all Shadows",
-          "timing": "onAfterAttack"
+          "description": "Once per game, roll a 4-sided die to give that much damage.",
+          "timing": "onBeforeAttack"
+        }
+      ]
+    },
+    {
+      "id": "UNKNOWN",
+      "name": "Unknown",
+      "faction": "SHADOW",
+      "maxHp": 11,
+      "abilities": [
+        {
+          "id": "deceit",
+          "name": "Deceit",
+          "description": "May lie about Hermit card results without revealing identity.",
+          "timing": "onAfterAreaAction"
         }
       ]
     },
@@ -49,10 +122,10 @@
       "maxHp": 13,
       "abilities": [
         {
-          "id": "bloodsuck",
-          "name": "Bloodsuck",
-          "description": "When you attack and deal damage, heal 2 HP",
-          "timing": "onAfterAttack"
+          "id": "suck_blood",
+          "name": "Suck Blood",
+          "description": "Heal 2 damage when you deal damage.",
+          "timing": "onDamageApply"
         }
       ]
     },
@@ -64,9 +137,125 @@
       "abilities": [
         {
           "id": "counterattack",
-          "name": "Counter Attack",
-          "description": "After you are attacked, you may immediately counterattack",
+          "name": "Counterattack",
+          "description": "May immediately counterattack after being attacked.",
           "timing": "onAfterAttack"
+        }
+      ]
+    },
+    {
+      "id": "AGNES",
+      "name": "Agnes",
+      "faction": "NEUTRAL",
+      "maxHp": 8,
+      "winCondition": "The player to your immediate right wins",
+      "abilities": [
+        {
+          "id": "capriccio",
+          "name": "Capriccio",
+          "description": "Once per game, change win condition to left-side player instead of right.",
+          "timing": "onBeforeMove"
+        }
+      ]
+    },
+    {
+      "id": "BRYAN",
+      "name": "Bryan",
+      "faction": "NEUTRAL",
+      "maxHp": 10,
+      "winCondition": "Your attack kills a character whose hp is 13 or more or you are on the Erstwhile Altar when the game is over",
+      "abilities": [
+        {
+          "id": "my_god",
+          "name": "MY GOD!!!",
+          "description": "Must reveal identity if your attack kills a character with 12 or less HP.",
+          "timing": "onAfterAttack"
+        }
+      ]
+    },
+    {
+      "id": "CATHERINE",
+      "name": "Catherine",
+      "faction": "NEUTRAL",
+      "maxHp": 11,
+      "winCondition": "You die first or you are one of the last two characters remaining",
+      "abilities": [
+        {
+          "id": "stigmata",
+          "name": "Stigmata",
+          "description": "At the start of each turn, heal 1 damage if you have any.",
+          "timing": "onBeforeMove"
+        }
+      ]
+    },
+    {
+      "id": "DAVID",
+      "name": "David",
+      "faction": "NEUTRAL",
+      "maxHp": 13,
+      "winCondition": "You have 3 or more of the following: Talisman, Spear of Longinus, Holy Robe, Silver Rosary",
+      "abilities": [
+        {
+          "id": "grave_digger",
+          "name": "Grave Digger",
+          "description": "Once per game, take an equipment card from a discard pile.",
+          "timing": "onAfterAreaAction"
+        }
+      ]
+    },
+    {
+      "id": "ELLEN",
+      "name": "Ellen",
+      "faction": "HUNTER",
+      "maxHp": 10,
+      "abilities": [
+        {
+          "id": "chain_of_forbidden_curse",
+          "name": "Chain of Forbidden Curse",
+          "description": "Remove another character's special ability for the rest of the game.",
+          "timing": "onAfterAreaAction"
+        }
+      ]
+    },
+    {
+      "id": "FUKA",
+      "name": "Fu-ka",
+      "faction": "HUNTER",
+      "maxHp": 12,
+      "abilities": [
+        {
+          "id": "dynamite_nurse",
+          "name": "Dynamite Nurse",
+          "description": "Once per game, set a chosen character's damage to 7.",
+          "timing": "onAfterAreaAction"
+        }
+      ]
+    },
+    {
+      "id": "GREGOR",
+      "name": "Gregor",
+      "faction": "HUNTER",
+      "maxHp": 14,
+      "abilities": [
+        {
+          "id": "ghostly_barrier",
+          "name": "Ghostly Barrier",
+          "description": "Become immune to damage until the start of your next turn.",
+          "timing": "onDamageApply"
+        }
+      ]
+    },
+    {
+      "id": "ULTRA_SOUL",
+      "name": "Ultra Soul",
+      "faction": "SHADOW",
+      "maxHp": 11,
+      "abilities": [
+        {
+          "id": "murder_ray",
+          "name": "Murder Ray",
+          "description": "At the start of your turn, give 3 damage to a character at Underworld Gate.",
+          "timing": "onBeforeMove"
         }
       ]
     },
@@ -77,48 +266,24 @@
       "maxHp": 13,
       "abilities": [
         {
-          "id": "advent",
-          "name": "Advent",
-          "description": "When your turn starts, if you're at Underworld Gate, all Hunters take 2 damage",
+          "id": "horn_of_war_outbreak",
+          "name": "Horn of War Outbreak",
+          "description": "Attacks use only the 4-sided die for damage.",
+          "timing": "onAttackRoll"
+        }
+      ]
+    },
+    {
+      "id": "WIGHT",
+      "name": "Wight",
+      "faction": "SHADOW",
+      "maxHp": 14,
+      "abilities": [
+        {
+          "id": "multiplication",
+          "name": "Multiplication",
+          "description": "Multiplication",
           "timing": "onBeforeMove"
-        }
-      ]
-    },
-    {
-      "id": "ALLIE",
-      "name": "Allie",
-      "faction": "NEUTRAL",
-      "maxHp": 8,
-      "winCondition": "You win if you're the first to die",
-      "abilities": []
-    },
-    {
-      "id": "BOB",
-      "name": "Bob",
-      "faction": "NEUTRAL",
-      "maxHp": 10,
-      "winCondition": "You win if you have 5 or more equipment cards",
-      "abilities": [
-        {
-          "id": "robbery",
-          "name": "Robbery",
-          "description": "Once per turn, you may steal an equipment card instead of attacking",
-          "timing": "onBeforeAttack"
-        }
-      ]
-    },
-    {
-      "id": "CHARLES",
-      "name": "Charles",
-      "faction": "NEUTRAL",
-      "maxHp": 11,
-      "winCondition": "You win if you're one of the last 2 players alive",
-      "abilities": [
-        {
-          "id": "bloodthirsty",
-          "name": "Bloodthirsty",
-          "description": "When your HP is 6 or less, your attacks deal +2 damage",
-          "timing": "onDamageApply"
         }
       ]
     }
