@@ -96,7 +96,7 @@ function Table() {
         {/* Dice Panel */}
         {view.lastDiceRoll && (
           <div style={{ padding: '20px', borderBottom: '1px solid rgba(255, 255, 255, 0.1)' }}>
-            <DicePanel roll={view.lastDiceRoll} />
+            <DicePanel roll={view.lastDiceRoll} context={view.lastRollContext} />
           </div>
         )}
 

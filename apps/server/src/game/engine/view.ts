@@ -49,6 +49,7 @@ export function createClientView(state: MatchState, viewerSeat?: Seat): ClientVi
     players,
     areas: state.areas,
     lastDiceRoll: state.lastDiceRoll,
+    lastRollContext: state.lastRollContext,
     pendingAreaChoice: state.pendingAreaChoice,
     legalActions,
     winners: state.winners,

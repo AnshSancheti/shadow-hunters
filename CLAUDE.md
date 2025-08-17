@@ -77,6 +77,8 @@ npm run test
 - **Testing Mode**: MIN_PLAYERS set to 1 for easier development testing
 - **Host Actions Fix**: Fixed issue where seat 0 (host) had no available actions due to falsy value check
 - **Dice Rolling Fix**: Fixed stuck state when rolling 7 - properly clears `pendingAreaChoice` flag after area selection and on new turns
+- **RNG Improvements**: Replaced broken Xoroshiro128+ with crypto-based SHA-256 RNG for uniform distribution
+- **Dice Display Enhancement**: Attack rolls now show in UI with D6-D4 format, movement rolls show D6+D4
 
 ## Known Considerations
 - Currently uses in-memory storage (no persistence)

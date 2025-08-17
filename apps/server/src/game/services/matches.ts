@@ -77,6 +77,7 @@ export class MatchService {
         HERMIT: []
       },
       pendingAreaChoice: false,
+      lastRollContext: undefined,
       eventsApplied: 0
     };
 
@@ -283,6 +284,7 @@ export class MatchService {
         
         case 'DICE_ROLLED':
           match.lastDiceRoll = event.data.roll;
+          match.lastRollContext = event.data.rollContext;
           match.pendingAreaChoice = event.data.mustChooseArea;
           break;
         

@@ -2,12 +2,17 @@ import type { DiceRoll } from '@shadow-hunters/shared';
 
 interface DicePanelProps {
   roll: DiceRoll;
+  context?: 'MOVE' | 'ATTACK';
 }
 
-function DicePanel({ roll }: DicePanelProps) {
+function DicePanel({ roll, context = 'MOVE' }: DicePanelProps) {
+  const isAttack = context === 'ATTACK';
+  
   return (
     <div>
-      <h3 style={{ marginBottom: '15px' }}>Last Roll</h3>
+      <h3 style={{ marginBottom: '15px' }}>
+        {isAttack ? 'Attack Roll' : 'Movement Roll'}
+      </h3>
       
       <div style={{ display: 'flex', gap: '15px', justifyContent: 'center' }}>
         <div style={{ 
@@ -30,7 +35,7 @@ function DicePanel({ roll }: DicePanelProps) {
           alignItems: 'center',
           fontSize: '20px'
         }}>
-          +
+          {isAttack ? '-' : '+'}
         </div>
         
         <div style={{ 
@@ -62,22 +67,12 @@ function DicePanel({ roll }: DicePanelProps) {
           alignItems: 'center',
           fontSize: '28px',
           fontWeight: 'bold',
-          color: roll.sum === 7 ? 'gold' : 'white'
+          color: isAttack ? 'white' : (roll.sum === 7 ? 'gold' : 'white')
         }}>
-          {roll.sum}
+          {isAttack ? roll.difference : roll.sum}
+          {isAttack && <span style={{ fontSize: '16px', marginLeft: '8px' }}>damage</span>}
         </div>
       </div>
-      
-      {roll.difference !== undefined && (
-        <div style={{ 
-          marginTop: '10px',
-          textAlign: 'center',
-          opacity: 0.7,
-          fontSize: '14px'
-        }}>
-          Attack Damage: {roll.difference}
-        </div>
-      )}
     </div>
   );
 }

@@ -117,6 +117,7 @@ export interface MatchState {
     HERMIT: string[];
   };
   lastDiceRoll?: DiceRoll;
+  lastRollContext?: 'MOVE' | 'ATTACK';
   pendingAreaChoice?: boolean;
   hermitDelivery?: {
     from: Seat;
@@ -154,6 +155,7 @@ export interface ClientView {
   yourHand?: CardInstance[];
   yourCharacter?: CharacterDef;
   lastDiceRoll?: DiceRoll;
+  lastRollContext?: 'MOVE' | 'ATTACK';
   pendingAreaChoice?: boolean;
   legalActions: LegalAction[];
   winners?: Seat[];

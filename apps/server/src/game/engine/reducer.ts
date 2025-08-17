@@ -56,7 +56,8 @@ export function gameReducer(
         data: {
           seat: state.activeSeat!,
           roll,
-          mustChooseArea
+          mustChooseArea,
+          rollContext: 'MOVE'
         }
       });
 
@@ -290,6 +291,18 @@ export function gameReducer(
       const roll = rng.rollDice();
       const damage = roll.difference;
       const newHp = Math.max(0, target.hp - damage);
+      
+      // Emit dice roll event for display
+      events.push({
+        id: nanoid(),
+        timestamp,
+        type: 'DICE_ROLLED',
+        data: {
+          seat: state.activeSeat!,
+          roll,
+          rollContext: 'ATTACK'
+        }
+      });
 
       events.push({
         id: nanoid(),
