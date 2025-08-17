@@ -13,9 +13,9 @@ import { RNG } from './rng';
 import { validateCommand } from './validators';
 import { 
   DICE_AREA_RANGES, 
-  SPECIAL_DICE_SUM,
-  AREA_PAIRS 
+  SPECIAL_DICE_SUM
 } from '../model/constants';
+import { areAreasPaired } from '../utils/pairings';
 
 export interface ReducerContext {
   state: MatchState;
@@ -401,12 +401,7 @@ function canAttack(attacker: PlayerState, target: PlayerState, state: MatchState
   
   if (attackerArea === targetArea) return true;
   
-  const pair = AREA_PAIRS.find(([a, b]) => 
-    (a === attackerArea && b === targetArea) || 
-    (b === attackerArea && a === targetArea)
-  );
-  
-  return !!pair;
+  return areAreasPaired(state, attackerArea, targetArea);
 }
 
 function getNextAliveSeat(state: MatchState): Seat {

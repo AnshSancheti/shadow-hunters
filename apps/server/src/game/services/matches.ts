@@ -66,6 +66,7 @@ export class MatchService {
         }
       },
       areas: this.initializeAreas(),
+      areaPairings: [],
       decks: {
         WHITE: { draw: [], discard: [] },
         BLACK: { draw: [], discard: [] },
@@ -143,6 +144,9 @@ export class MatchService {
 
     // Initialize game state
     const rng = new RNG(match.rngSeed);
+    
+    // Generate random area pairings
+    this.generateAreaPairings(match, rng);
     
     // Shuffle and assign characters
     this.assignCharacters(match, rng);
@@ -239,6 +243,22 @@ export class MatchService {
       areas[area.id] = area;
     }
     return areas;
+  }
+
+  private generateAreaPairings(match: MatchState, rng: RNG) {
+    // Get all area IDs
+    const areaIds = Object.keys(match.areas) as AreaId[];
+    
+    // Shuffle the areas randomly
+    const shuffledAreas = rng.shuffle([...areaIds]);
+    
+    // Pair them up: [0,1], [2,3], [4,5]
+    const pairings: [AreaId, AreaId][] = [];
+    for (let i = 0; i < shuffledAreas.length; i += 2) {
+      pairings.push([shuffledAreas[i], shuffledAreas[i + 1]]);
+    }
+    
+    match.areaPairings = pairings;
   }
 
   private assignCharacters(match: MatchState, rng: RNG) {

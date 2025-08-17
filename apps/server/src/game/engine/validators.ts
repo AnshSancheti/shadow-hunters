@@ -1,5 +1,5 @@
 import type { MatchState, Command, Seat, PlayerState } from '@shadow-hunters/shared';
-import { AREA_PAIRS } from '../model/constants';
+import { areAreasPaired } from '../utils/pairings';
 
 export interface ValidationResult {
   valid: boolean;
@@ -239,21 +239,15 @@ function validateResolveHermit(state: MatchState, command: any): ValidationResul
 function canStealFrom(thief: PlayerState, target: PlayerState, state: MatchState): boolean {
   if (thief.position === target.position) return true;
   
-  const pair = AREA_PAIRS.find(([a, b]) => 
-    (a === thief.position && b === target.position) || 
-    (b === thief.position && a === target.position)
-  );
+  if (!thief.position || !target.position) return false;
   
-  return !!pair;
+  return areAreasPaired(state, thief.position, target.position);
 }
 
 function canAttackTarget(attacker: PlayerState, target: PlayerState, state: MatchState): boolean {
   if (attacker.position === target.position) return true;
   
-  const pair = AREA_PAIRS.find(([a, b]) => 
-    (a === attacker.position && b === target.position) || 
-    (b === attacker.position && a === target.position)
-  );
+  if (!attacker.position || !target.position) return false;
   
-  return !!pair;
+  return areAreasPaired(state, attacker.position, target.position);
 }

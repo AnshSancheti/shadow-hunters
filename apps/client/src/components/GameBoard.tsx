@@ -6,14 +6,8 @@ function GameBoard() {
   
   if (!view) return null;
 
-  const areas = [
-    { id: 'HERMIT_CABIN', row: 0, col: 0 },
-    { id: 'UNDERWORLD_GATE', row: 0, col: 1 },
-    { id: 'CHURCH', row: 1, col: 0 },
-    { id: 'CEMETERY', row: 1, col: 1 },
-    { id: 'WEIRD_WOODS', row: 2, col: 0 },
-    { id: 'ERSTWHILE_ALTAR', row: 2, col: 1 }
-  ];
+  // Create area pairs for display - each pair will be on its own row
+  const areaPairs = view.areaPairings || [];
 
   const getPlayersInArea = (areaId: AreaId) => {
     return Object.values(view.players).filter(p => p.position === areaId);
@@ -69,34 +63,36 @@ function GameBoard() {
         </div>
       )}
       
-      {/* Game board areas */}
+      {/* Game board areas - displayed in pairs with separators */}
       <div style={{ 
-      display: 'grid',
-      gridTemplateColumns: '1fr 1fr',
-      gridTemplateRows: 'repeat(3, 1fr)',
-      gap: '20px',
-      height: '100%',
-      maxWidth: '800px',
-      margin: '0 auto'
-    }}>
-      {areas.map(({ id, row, col }) => {
-        const area = view.areas[id as AreaId];
-        const players = getPlayersInArea(id as AreaId);
-        
-        return (
-          <div
-            key={id}
-            style={{
-              gridRow: row + 1,
-              gridColumn: col + 1,
-              background: 'rgba(255, 255, 255, 0.05)',
-              border: '2px solid rgba(255, 255, 255, 0.2)',
-              borderRadius: '8px',
-              padding: '15px',
-              display: 'flex',
-              flexDirection: 'column'
-            }}
-          >
+        maxWidth: '800px',
+        margin: '0 auto'
+      }}>
+        {areaPairs.map((pair, pairIndex) => (
+          <div key={`pair-${pairIndex}`}>
+            {/* Area pair row */}
+            <div style={{ 
+              display: 'grid',
+              gridTemplateColumns: '1fr 1fr',
+              gap: '20px',
+              marginBottom: pairIndex < areaPairs.length - 1 ? '20px' : '0'
+            }}>
+              {pair.map((areaId) => {
+                const area = view.areas[areaId];
+                const players = getPlayersInArea(areaId);
+                
+                return (
+                  <div
+                    key={areaId}
+                    style={{
+                      background: 'rgba(255, 255, 255, 0.05)',
+                      border: '2px solid rgba(255, 255, 255, 0.2)',
+                      borderRadius: '8px',
+                      padding: '15px',
+                      display: 'flex',
+                      flexDirection: 'column'
+                    }}
+                  >
             <div style={{ marginBottom: '10px' }}>
               <h3 style={{ margin: 0, fontSize: '16px' }}>{area?.name}</h3>
               <p style={{ margin: '5px 0 0 0', opacity: 0.7, fontSize: '12px' }}>
@@ -154,14 +150,27 @@ function GameBoard() {
                 >
                   <div>{player.displayName}</div>
                   <div style={{ fontSize: '10px', opacity: 0.8 }}>
-                    HP: {player.hp} {player.revealed && `• ${player.faction}`}
+                      HP: {player.hp} {player.revealed && `• ${player.faction}`}
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
+                );
+              })}
+            </div>
+            
+            {/* Separator line between pairs */}
+            {pairIndex < areaPairs.length - 1 && (
+              <div style={{
+                height: '2px',
+                background: 'rgba(255, 255, 255, 0.2)',
+                margin: '20px 0',
+                borderRadius: '1px'
+              }} />
+            )}
           </div>
-        );
-      })}
+        ))}
       </div>
     </div>
   );

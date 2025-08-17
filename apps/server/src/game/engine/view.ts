@@ -7,6 +7,7 @@ import type {
   GameEvent
 } from '@shadow-hunters/shared';
 import charactersData from '../data/characters.json';
+import { getPairedArea as getDynamicPairedArea } from '../utils/pairings';
 
 export function createClientView(state: MatchState, viewerSeat?: Seat): ClientView {
   const players: Record<Seat, PublicPlayerView> = {};
@@ -48,6 +49,7 @@ export function createClientView(state: MatchState, viewerSeat?: Seat): ClientVi
     round: state.round,
     players,
     areas: state.areas,
+    areaPairings: state.areaPairings,
     lastDiceRoll: state.lastDiceRoll,
     lastRollContext: state.lastRollContext,
     pendingAreaChoice: state.pendingAreaChoice,
@@ -155,7 +157,7 @@ function getLegalActions(state: MatchState, viewerSeat?: Seat): LegalAction[] {
             
             case 'STEAL_EQUIPMENT':
               // Can steal from players in same or paired area
-              const pairedArea = player.position ? getPairedArea(player.position) : null;
+              const pairedArea = player.position ? getDynamicPairedArea(state, player.position) : null;
               for (const target of Object.values(state.players)) {
                 if (target.alive && 
                     target.seat !== player.seat &&
@@ -197,7 +199,7 @@ function getLegalActions(state: MatchState, viewerSeat?: Seat): LegalAction[] {
       
     case 'ATTACK':
       // Can attack players in same or paired area
-      const attackerPairedArea = player.position ? getPairedArea(player.position) : null;
+      const attackerPairedArea = player.position ? getDynamicPairedArea(state, player.position) : null;
       for (const target of Object.values(state.players)) {
         if (target.alive && 
             target.seat !== player.seat &&
@@ -238,14 +240,3 @@ function getCharacterFaction(characterId: string): any {
   return character ? character.faction : null;
 }
 
-function getPairedArea(areaId: string): string | null {
-  const pairs: Record<string, string> = {
-    'UNDERWORLD_GATE': 'CHURCH',
-    'CHURCH': 'UNDERWORLD_GATE',
-    'HERMIT_CABIN': 'CEMETERY',
-    'CEMETERY': 'HERMIT_CABIN',
-    'WEIRD_WOODS': 'ERSTWHILE_ALTAR',
-    'ERSTWHILE_ALTAR': 'WEIRD_WOODS'
-  };
-  return pairs[areaId] || null;
-}

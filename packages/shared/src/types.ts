@@ -57,7 +57,6 @@ export interface AreaDef {
   id: AreaId;
   name: string;
   range: [number, number];
-  pairedWith?: AreaId;
   action?: AreaActionSpec;
   actions?: AreaActionSpec[];
 }
@@ -107,6 +106,7 @@ export interface MatchState {
   rngSeed: string;
   players: Record<Seat, PlayerState>;
   areas: Record<AreaId, AreaDef>;
+  areaPairings: [AreaId, AreaId][];
   decks: {
     WHITE: DeckState;
     BLACK: DeckState;
@@ -153,6 +153,7 @@ export interface ClientView {
   round: number;
   players: Record<Seat, PublicPlayerView>;
   areas: Record<AreaId, AreaDef>;
+  areaPairings: [AreaId, AreaId][];
   yourHand?: CardInstance[];
   yourCharacter?: CharacterDef;
   lastDiceRoll?: DiceRoll;

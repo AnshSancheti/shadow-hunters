@@ -3,11 +3,7 @@ import type { AreaId } from '@shadow-hunters/shared';
 export const MIN_PLAYERS = 1; // Reduced to 1 for testing
 export const MAX_PLAYERS = 8;
 
-export const AREA_PAIRS: [AreaId, AreaId][] = [
-  ['UNDERWORLD_GATE', 'CHURCH'],
-  ['HERMIT_CABIN', 'CEMETERY'],
-  ['WEIRD_WOODS', 'ERSTWHILE_ALTAR']
-];
+// Area pairs are now dynamically generated during game initialization
 
 export const DICE_AREA_RANGES: Record<number, AreaId> = {
   2: 'HERMIT_CABIN',
