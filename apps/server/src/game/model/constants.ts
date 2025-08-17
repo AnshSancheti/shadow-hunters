@@ -10,16 +10,14 @@ export const AREA_PAIRS: [AreaId, AreaId][] = [
 ];
 
 export const DICE_AREA_RANGES: Record<number, AreaId> = {
-  2: 'UNDERWORLD_GATE',
-  3: 'UNDERWORLD_GATE',
-  4: 'CHURCH',
-  5: 'CHURCH',
-  6: 'HERMIT_CABIN',
+  2: 'HERMIT_CABIN',
+  3: 'HERMIT_CABIN',
+  4: 'UNDERWORLD_GATE',
+  5: 'UNDERWORLD_GATE',
+  6: 'CHURCH',
   8: 'CEMETERY',
   9: 'WEIRD_WOODS',
-  10: 'WEIRD_WOODS',
-  11: 'ERSTWHILE_ALTAR',
-  12: 'ERSTWHILE_ALTAR'
+  10: 'ERSTWHILE_ALTAR'
 };
 
 export const SPECIAL_DICE_SUM = 7;
