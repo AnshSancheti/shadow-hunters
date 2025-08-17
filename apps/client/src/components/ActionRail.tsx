@@ -143,6 +143,15 @@ function ActionRail() {
           </>
         )}
         
+        {view.phase === 'END' && groupedActions['END'] && (
+          <button
+            onClick={() => handleAction(groupedActions['END'][0])}
+            style={{ padding: '10px 20px' }}
+          >
+            End Turn
+          </button>
+        )}
+
         {groupedActions['REVEAL'] && (
           <button 
             onClick={() => handleAction(groupedActions['REVEAL'][0])}

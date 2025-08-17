@@ -317,7 +317,17 @@ export function gameReducer(
         });
       }
 
-      // Stay in ATTACK phase to allow multiple attacks
+      // Transition to END phase after attack
+      events.push({
+        id: nanoid(),
+        timestamp,
+        type: 'PHASE_CHANGED',
+        data: {
+          from: 'ATTACK',
+          to: 'END',
+          seat: state.activeSeat!
+        }
+      });
       break;
     }
 
