@@ -33,6 +33,6 @@ export const FACTION_DISTRIBUTION = {
   4: { hunters: 2, shadows: 2, neutrals: 0 },
   5: { hunters: 2, shadows: 2, neutrals: 1 },
   6: { hunters: 2, shadows: 2, neutrals: 2 },
-  7: { hunters: 3, shadows: 3, neutrals: 1 },
+  7: { hunters: 2, shadows: 2, neutrals: 3 },
   8: { hunters: 3, shadows: 3, neutrals: 2 }
 };
