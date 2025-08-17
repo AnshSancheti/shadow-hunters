@@ -119,6 +119,16 @@ export function gameReducer(
           to: command.areaId
         }
       });
+      
+      // Clear the pending area choice flag
+      events.push({
+        id: nanoid(),
+        timestamp,
+        type: 'AREA_CHOICE_RESOLVED',
+        data: {
+          seat: state.activeSeat!
+        }
+      });
 
       events.push({
         id: nanoid(),

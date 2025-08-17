@@ -75,6 +75,8 @@ npm run test
 - **Personalized Views**: Each player sees their own "You" label correctly via personalized Socket.IO messages
 - **4-Character Game Codes**: Simplified from 8-character nanoid to 4-letter codes
 - **Testing Mode**: MIN_PLAYERS set to 1 for easier development testing
+- **Host Actions Fix**: Fixed issue where seat 0 (host) had no available actions due to falsy value check
+- **Dice Rolling Fix**: Fixed stuck state when rolling 7 - properly clears `pendingAreaChoice` flag after area selection and on new turns
 
 ## Known Considerations
 - Currently uses in-memory storage (no persistence)

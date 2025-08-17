@@ -64,7 +64,7 @@ export function createClientView(state: MatchState, viewerSeat?: Seat): ClientVi
 function getLegalActions(state: MatchState, viewerSeat?: Seat): LegalAction[] {
   const actions: LegalAction[] = [];
   
-  if (state.status !== 'ACTIVE' || !state.activeSeat || viewerSeat !== state.activeSeat) {
+  if (state.status !== 'ACTIVE' || state.activeSeat === undefined || viewerSeat !== state.activeSeat) {
     return actions;
   }
   

@@ -76,6 +76,7 @@ export class MatchService {
         BLACK: [],
         HERMIT: []
       },
+      pendingAreaChoice: false,
       eventsApplied: 0
     };
 
@@ -284,6 +285,10 @@ export class MatchService {
           match.pendingAreaChoice = event.data.mustChooseArea;
           break;
         
+        case 'AREA_CHOICE_RESOLVED':
+          match.pendingAreaChoice = false;
+          break;
+        
         case 'PHASE_CHANGED':
           match.phase = event.data.to;
           break;
@@ -292,6 +297,7 @@ export class MatchService {
           match.activeSeat = event.data.seat;
           match.round = event.data.round;
           match.phase = event.data.phase;
+          match.pendingAreaChoice = false; // Clear any lingering area choice
           break;
         
         case 'ATTACK_RESOLVED':

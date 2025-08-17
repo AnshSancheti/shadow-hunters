@@ -171,24 +171,25 @@ const start = async () => {
           if (result.success) {
             const match = matchService.getMatch(currentMatchId);
             if (match) {
-              // Send game started to all players
-              io.to(currentMatchId).emit('MATCH_STARTED', {
-                id: Date.now().toString(),
-                timestamp: Date.now(),
-                type: 'MATCH_STARTED',
-                data: {
-                  seats: match.seats,
-                  yourSeat: currentSeat
-                }
-              });
-              
-              // Send state sync to all players with their own views
+              // Send game started and state sync to all players
               const sockets = await io.in(currentMatchId).fetchSockets();
               for (const s of sockets) {
                 const socketUserId = s.data?.userId;
                 if (socketUserId) {
                   const player = Object.values(match.players).find(p => p.userId === socketUserId);
                   if (player) {
+                    // Send personalized MATCH_STARTED
+                    s.emit('MATCH_STARTED', {
+                      id: Date.now().toString(),
+                      timestamp: Date.now(),
+                      type: 'MATCH_STARTED',
+                      data: {
+                        seats: match.seats,
+                        yourSeat: player.seat
+                      }
+                    });
+                    
+                    // Send personalized view
                     const view = matchService.getClientView(currentMatchId, player.seat);
                     s.emit('STATE_SYNC', {
                       id: Date.now().toString(),
