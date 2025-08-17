@@ -7,9 +7,9 @@ function GameBoard() {
   if (!view) return null;
 
   const areas = [
-    { id: 'UNDERWORLD_GATE', row: 0, col: 0 },
-    { id: 'CHURCH', row: 0, col: 1 },
-    { id: 'HERMIT_CABIN', row: 1, col: 0 },
+    { id: 'HERMIT_CABIN', row: 0, col: 0 },
+    { id: 'UNDERWORLD_GATE', row: 0, col: 1 },
+    { id: 'CHURCH', row: 1, col: 0 },
     { id: 'CEMETERY', row: 1, col: 1 },
     { id: 'WEIRD_WOODS', row: 2, col: 0 },
     { id: 'ERSTWHILE_ALTAR', row: 2, col: 1 }
